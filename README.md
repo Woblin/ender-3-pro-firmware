@@ -22,10 +22,13 @@ git clone --recursive git@github.com:Woblin/ender-3-pro-firmware.git
 cd ender-3-pro-firmware
 ./scripts/apply-config.sh
 cd Marlin
-pio run -e <env>        # t.ex. STM32F103RE_creality för 4.2.x-kort
+pio run -e STM32F103RE_creality
 ```
 
-Firmwarefilen hamnar i `Marlin/.pio/build/<env>/` och kopieras till SD-kortet.
+GitHub Actions bygger firmware vid varje push och PR. Den färdiga `.bin`-filen
+kan laddas ner under fliken **Actions** → körningen → **Artifacts**.
+
+Vid lokalt bygge hamnar firmwarefilen i `Marlin/.pio/build/<env>/` och kopieras till SD-kortet.
 Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 4.2.x-korten hoppa över uppdateringen.
 
@@ -34,19 +37,19 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 | | |
 |---|---|
 | Marlin-version | 2.1.2.10 |
-| Exempelconfig | _ej vald än_ |
-| Moderkort | _okänt_ |
-| PlatformIO-env | _okänt_ |
-| Display | _okänt_ |
+| Exempelconfig | `Creality/Ender-3 Pro/CrealityV427` (release-2.1.2.10) |
+| Moderkort | Creality V4.2.7 "Silent", TMC2225 |
+| PlatformIO-env | `STM32F103RE_creality` |
+| Display | Standard (CR10_STOCKDISPLAY) |
 
 ### Uppgraderingar
 
 | Datum | Uppgradering | Påverkar config |
 |---|---|---|
-| | BLTouch | Ja: probe, bed leveling, probe-offset, Z-endstop |
-| | Glasbädd | Z-offset (tjockare bädd) |
+| | BLTouch (5-pinsporten) | Probe som Z-endstop, bilinjär 5x5-nivellering |
+| | Glasbädd | Inget i firmware, Z-offset ställs in med BLTouch |
 | | Direct drive: Creality Sprite | E-steg ~424.9 (Creality-värde, kalibrera), ev. inverterad E-riktning, kortare retraction |
-| | Tyst moderkort (_version?_) | Val av exempelconfig |
+| | Creality V4.2.7 Silent | Val av exempelconfig |
 
 ## Kalibrerade värden
 
@@ -54,12 +57,12 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 
 | Värde | Standard | Kalibrerat | Datum | Anteckning |
 |---|---|---|---|---|
-| E-steg (steps/mm) | 93 | | | Sprite: start på 424.9 |
+| E-steg (steps/mm) | 424.9 (Sprite) | | | Kalibrera med 100 mm-test |
 | X/Y/Z-steg | 80 / 80 / 400 | | | |
 | Hotend PID (P/I/D) | | | | `M303 E0 S210 C8` |
 | Bädd PID (P/I/D) | | | | `M303 E-1 S60 C8` |
-| Z-offset | | | | om probe finns |
-| Probe-offset X/Y | | | | om probe finns |
+| Z-offset | 0 | | | Probe Offset Wizard i menyn, sen `M500` |
+| Probe-offset X/Y | -31.8 / -40.5 (gissning) | | | Mät, `M851 X.. Y..` |
 
 ## Uppdatera Marlin
 
