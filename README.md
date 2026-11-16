@@ -88,7 +88,7 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 | Hotend PID (P/I/D) | | | | `M303 E0 S210 C8` |
 | Bädd PID (P/I/D) | | | | `M303 E-1 S60 C8` |
 | Z-offset | 0 | | | Probe Offset Wizard i menyn, sen `M500` |
-| Probe-offset X/Y | -31.8 / -40.5 (gissning) | | | Mät, `M851 X.. Y..` |
+| Probe-offset X/Y | -32 / -40.5 | | 2026-11-16 | Från gamla builden (2.1.2.4) |
 
 ## Uppdatera Marlin
 
