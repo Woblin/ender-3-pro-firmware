@@ -65,7 +65,17 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 | PREHEAT_BEFORE_LEVELING | Bädden 60 °C innan G29 |
 | ARC_SUPPORT (standard) | För OctoPrint-pluginet Arc Welder |
 
-Att testa senare: INPUT_SHAPING, LIN_ADVANCE.
+| INPUT_SHAPING_X/Y (frekvens 0 = av) | Mindre ringning. Kalibrera med `M593 X F.. ` / `M593 Y F..` |
+| LIN_ADVANCE (K=0 = av) | Skarpare hörn. Kalibrera med `M900 K..` |
+
+### Kalibreringsordning efter flash
+
+1. `M502` och sedan `M500` (nollställ EEPROM till firmwarens värden)
+2. Kontrollera extruderns riktning, BLTouch (`M280 P0 S120` självtest) och homing
+3. E-steg (`M92 E..`), PID hotend (`M303 E0 S210 C8`), PID bädd (`M303 E-1 S60 C8`)
+4. Z-offset med Probe Offset Wizard, mesh med `G29`, spara med `M500`
+5. Input shaping: testtorn, sätt `M593 X F.. ` och `M593 Y F..`
+6. Linear advance: K-faktortest, sätt `M900 K..`
 
 ## Kalibrerade värden
 
