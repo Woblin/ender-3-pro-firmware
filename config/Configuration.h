@@ -1514,7 +1514,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -32, -40.5, 0 } // Från Roberts gamla build (2.1.2.4)
+#define NOZZLE_TO_PROBE_OFFSET { -32, -40.5, 0 } // Från gamla builden (Marlin 2.1.2.4)
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
