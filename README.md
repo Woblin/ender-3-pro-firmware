@@ -45,7 +45,7 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 |---|---|---|
 | | BLTouch | Ja: probe, bed leveling, probe-offset, Z-endstop |
 | | Glasbädd | Z-offset (tjockare bädd) |
-| | Direct drive-extruder (_modell?_) | E-steg, ev. retraction |
+| | Direct drive: Creality Sprite | E-steg ~424.9 (Creality-värde, kalibrera), ev. inverterad E-riktning, kortare retraction |
 | | Tyst moderkort (_version?_) | Val av exempelconfig |
 
 ## Kalibrerade värden
@@ -54,7 +54,7 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 
 | Värde | Standard | Kalibrerat | Datum | Anteckning |
 |---|---|---|---|---|
-| E-steg (steps/mm) | 93 | | | |
+| E-steg (steps/mm) | 93 | | | Sprite: start på 424.9 |
 | X/Y/Z-steg | 80 / 80 / 400 | | | |
 | Hotend PID (P/I/D) | | | | `M303 E0 S210 C8` |
 | Bädd PID (P/I/D) | | | | `M303 E-1 S60 C8` |
