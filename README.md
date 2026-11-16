@@ -51,6 +51,22 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 | | Direct drive: Creality Sprite | E-steg ~424.9 (Creality-värde, kalibrera), ev. inverterad E-riktning, kortare retraction |
 | | Creality V4.2.7 Silent | Val av exempelconfig |
 
+## Påslagna features utöver exempelconfigen
+
+| Feature | Varför |
+|---|---|
+| BLTouch, bilinjär 5x5, Z_SAFE_HOMING | Automatisk nivellering (visas i OctoPrint Bed Level Visualizer) |
+| PROBE_OFFSET_WIZARD, BABYSTEP_ZPROBE_OFFSET | Ställa Z-offset från displayen |
+| EMERGENCY_PARSER | Nödstopp och avbrott från OctoPrint verkställs direkt |
+| HOST_ACTION_COMMANDS, HOST_PROMPT_SUPPORT | Paus/fortsätt och dialoger synkas med OctoPrint |
+| ADVANCED_OK, BUFSIZE 8 | Jämnare strömning över USB |
+| ADVANCED_PAUSE_FEATURE, PARK_HEAD_ON_PAUSE, FILAMENT_LOAD_UNLOAD_GCODES | M600 filamentbyte, M125, M701/M702 |
+| PIDTEMPBED | Stabil bäddtemperatur (glasbädd) |
+| PREHEAT_BEFORE_LEVELING | Bädden 60 °C innan G29 |
+| ARC_SUPPORT (standard) | För OctoPrint-pluginet Arc Welder |
+
+Att testa senare: INPUT_SHAPING, LIN_ADVANCE.
+
 ## Kalibrerade värden
 
 Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
