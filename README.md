@@ -43,7 +43,10 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 
 | Datum | Uppgradering | Påverkar config |
 |---|---|---|
-| | | |
+| | BLTouch | Ja: probe, bed leveling, probe-offset, Z-endstop |
+| | Glasbädd | Z-offset (tjockare bädd) |
+| | Direct drive-extruder (_modell?_) | E-steg, ev. retraction |
+| | Tyst moderkort (_version?_) | Val av exempelconfig |
 
 ## Kalibrerade värden
 
