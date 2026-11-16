@@ -48,7 +48,7 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 |---|---|---|
 | | BLTouch (5-pinsporten) | Probe som Z-endstop, bilinjär 5x5-nivellering |
 | | Glasbädd | Inget i firmware, Z-offset ställs in med BLTouch |
-| | Direct drive: Creality Sprite | E-steg ~424.9 (Creality-värde, kalibrera), ev. inverterad E-riktning, kortare retraction |
+| | Direct drive: Creality Sprite | E-steg 424.9, ev. kortare retraction |
 | | Creality V4.2.7 Silent | Val av exempelconfig |
 
 ## Påslagna features utöver exempelconfigen
@@ -77,17 +77,24 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 5. Input shaping: testtorn, sätt `M593 X F.. ` och `M593 Y F..`
 6. Linear advance: K-faktortest, sätt `M900 K..`
 
+## Värden från gamla builden (Marlin 2.1.2.4, M503)
+
+Stod bara i skrivarens EEPROM och har lagts in i `config/`: probe-offset
+X -32 / Y -40.5 / Z -4.94, max matning Z 10 / E 60, max acceleration
+X/Y 800 / Z 500, retract-acceleration 1000. Bäddnätet (3x3) sparades inte
+eftersom det mäts om med 5x5 och normalt är flackt (±0,1 mm).
+
 ## Kalibrerade värden
 
 Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 
 | Värde | Standard | Kalibrerat | Datum | Anteckning |
 |---|---|---|---|---|
-| E-steg (steps/mm) | 424.9 (Sprite) | | | Kalibrera med 100 mm-test |
+| E-steg (steps/mm) | 424.9 (Sprite) | 424.9 | 2026-11-16 | Samma som Creality-värdet, ej egen kalibrering. Gör 100 mm-test |
 | X/Y/Z-steg | 80 / 80 / 400 | | | |
-| Hotend PID (P/I/D) | | | | `M303 E0 S210 C8` |
-| Bädd PID (P/I/D) | | | | `M303 E-1 S60 C8` |
-| Z-offset | 0 | | | Probe Offset Wizard i menyn, sen `M500` |
+| Hotend PID (P/I/D) | 21.73 / 1.54 / 76.55 | | | Ej kalibrerad (exemplets värden). `M303 E0 S210 C8` |
+| Bädd PID (P/I/D) | 10 / 0.023 / 305.4 | | | PIDTEMPBED var av i gamla builden, kalibrera: `M303 E-1 S60 C8` |
+| Z-offset (BLTouch) | 0 | -4.94 | 2026-11-16 | Från M503 på gamla builden (`M851 Z`) |
 | Probe-offset X/Y | -32 / -40.5 | | 2026-11-16 | Från gamla builden (2.1.2.4) |
 
 ## Uppdatera Marlin
