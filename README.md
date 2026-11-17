@@ -93,7 +93,7 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 | E-steg (steps/mm) | 424.9 (Sprite) | 424.9 | 2026-11-16 | Samma som Creality-värdet, ej egen kalibrering. Gör 100 mm-test |
 | X/Y/Z-steg | 80 / 80 / 400 | | | |
 | Hotend PID (P/I/D) | 21.73 / 1.54 / 76.55 | 16.77 / 1.44 / 48.98 | 2026-11-17 | `M303 E0 S210 C8 U1`, 210 °C |
-| Bädd PID (P/I/D) | 10 / 0.023 / 305.4 | | | PIDTEMPBED var av i gamla builden, kalibrera: `M303 E-1 S60 C8` |
+| Bädd PID (P/I/D) | 10 / 0.023 / 305.4 | 206.06 / 35.29 / 802.28 | 2026-11-17 | `M303 E-1 S60 C8 U1`, 60 °C. PIDTEMPBED var av i gamla builden |
 | Z-offset (BLTouch) | 0 | -4.94 | 2026-11-16 | Från M503 på gamla builden (`M851 Z`) |
 | Probe-offset X/Y | -32 / -40.5 | | 2026-11-16 | Från gamla builden (2.1.2.4) |
 
