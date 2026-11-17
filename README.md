@@ -64,8 +64,7 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 | PIDTEMPBED | Stabil bäddtemperatur (glasbädd) |
 | PREHEAT_BEFORE_LEVELING | Bädden 60 °C innan G29 |
 | ARC_SUPPORT (standard) | För OctoPrint-pluginet Arc Welder |
-
-| INPUT_SHAPING_X/Y (frekvens 0 = av) | Mindre ringning. Kalibrera med `M593 X F.. ` / `M593 Y F..` |
+| INPUT_SHAPING_X/Y (X 65 Hz, Y 41 Hz) | Mindre ringning, som gör högre acceleration möjlig. Omkalibrera med `M593 X F.. ` / `M593 Y F..` |
 | LIN_ADVANCE (K=0 = av) | Skarpare hörn. Kalibrera med `M900 K..` |
 
 ### Kalibreringsordning efter flash
@@ -74,7 +73,7 @@ Tips: byt namn på `.bin`-filen till något nytt varje gång, annars kan
 2. Kontrollera extruderns riktning, BLTouch (`M280 P0 S120` självtest) och homing
 3. E-steg (`M92 E..`), PID hotend (`M303 E0 S210 C8`), PID bädd (`M303 E-1 S60 C8`)
 4. Z-offset med Probe Offset Wizard, mesh med `G29`, spara med `M500`
-5. Input shaping: testtorn, sätt `M593 X F.. ` och `M593 Y F..`
+5. Input shaping: Orcas frekvenstest, sätt `M593 X F.. ` och `M593 Y F..` (gjort, se nedan)
 6. Linear advance: K-faktortest, sätt `M900 K..`
 
 ## Värden från gamla builden (Marlin 2.1.2.4, M503)
@@ -96,6 +95,20 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 | Bädd PID (P/I/D) | 10 / 0.023 / 305.4 | 206.06 / 35.29 / 802.28 | 2026-11-17 | `M303 E-1 S60 C8 U1`, 60 °C. PIDTEMPBED var av i gamla builden |
 | Z-offset (BLTouch) | 0 | -4.94 | 2026-11-16 | Från M503 på gamla builden (`M851 Z`) |
 | Probe-offset X/Y | -32 / -40.5 | | 2026-11-16 | Från gamla builden (2.1.2.4) |
+| Input shaping X/Y | av | 65 Hz / 41 Hz (zeta 0.15) | 2026-11-17 | Orcas Calibration → Input Shaping → Frequency test |
+| Acceleration X/Y (max) | 500 / 800 | 3000 | 2026-11-17 | `DEFAULT_MAX_ACCELERATION`. Testat med 20 mm-kub: 1500 och 2500 mm/s² gav rena hörn |
+| Acceleration print/travel | 500 / 500 | 2500 / 2500 | 2026-11-17 | `DEFAULT_ACCELERATION` och `DEFAULT_TRAVEL_ACCELERATION` |
+
+## OrcaSlicer-inställningar som hör ihop med firmwaren
+
+- G-code-flavor: **Marlin 2** (krävs för input shaping-testet)
+- Maskinens max acceleration X/Y och extruding: **3000**, junction deviation **0.08** (samma som firmwaren)
+- Acceleration i processen: 2500 (första lagret 300). Orca stryper processens värden till maskinens max
+- Start-G-code: `G28` följt av `M420 S1` (ladda sparat nät i stället för `G29` varje print)
+- Z-hop 0 (direktdrift). Kontrollera att objekt inte har egna inställningar som överstyr profilen (Objects-fliken)
+- Avaktivera "Slow printing down for better layer cooling" vid tester på små modeller, annars går väggarna på 10–20 mm/s
+- Yttervägg: **100 mm/s** är verifierad (20 mm-kub, acceleration 2500). 150 mm/s gav tunna väggar (underextrudering): 150 × 0,45 × 0,2 ≈ 13,5 mm³/s över flödestaket 12 mm³/s. Behåll `filament_max_volumetric_speed` på 12 om inget flödestest gjorts. För mer fart: större lagerhöjd, inte högre hastighet
+- Bäddnät: bygg det **förvärmt** (`M104 S120`, `M140 S60`, `M109 S120`, `M190 S60`, `G28`, `G29`) och kontrollera att värdena ligger nära 0 innan `M500`. Två G29-körningar efter kall start gav +4,5 mm i hela nätet (orsak okänd). `G30` kräver `G28` före varje körning, annars "Z Probe Past Bed"
 
 ## Uppdatera Marlin
 
