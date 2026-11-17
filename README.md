@@ -107,6 +107,8 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 - Start-G-code: `G28` följt av `M420 S1` (ladda sparat nät i stället för `G29` varje print)
 - Z-hop 0 (direktdrift). Kontrollera att objekt inte har egna inställningar som överstyr profilen (Objects-fliken)
 - Avaktivera "Slow printing down for better layer cooling" vid tester på små modeller, annars går väggarna på 10–20 mm/s
+- Yttervägg: **100 mm/s** är verifierad (20 mm-kub, acceleration 2500). 150 mm/s gav tunna väggar (underextrudering): 150 × 0,45 × 0,2 ≈ 13,5 mm³/s över flödestaket 12 mm³/s. Behåll `filament_max_volumetric_speed` på 12 om inget flödestest gjorts. För mer fart: större lagerhöjd, inte högre hastighet
+- Bäddnät: bygg det **förvärmt** (`M104 S120`, `M140 S60`, `M109 S120`, `M190 S60`, `G28`, `G29`) och kontrollera att värdena ligger nära 0 innan `M500`. Två G29-körningar efter kall start gav +4,5 mm i hela nätet (orsak okänd). `G30` kräver `G28` före varje körning, annars "Z Probe Past Bed"
 
 ## Uppdatera Marlin
 
