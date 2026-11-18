@@ -107,7 +107,9 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 - Start-G-code: `G28` följt av `M420 S1` (ladda sparat nät i stället för `G29` varje print)
 - Z-hop 0 (direktdrift). Kontrollera att objekt inte har egna inställningar som överstyr profilen (Objects-fliken)
 - Avaktivera "Slow printing down for better layer cooling" vid tester på små modeller, annars går väggarna på 10–20 mm/s
-- Yttervägg: **100 mm/s** är verifierad (20 mm-kub, acceleration 2500). 150 mm/s gav tunna väggar (underextrudering): 150 × 0,45 × 0,2 ≈ 13,5 mm³/s över flödestaket 12 mm³/s. Behåll `filament_max_volumetric_speed` på 12 om inget flödestest gjorts. För mer fart: större lagerhöjd, inte högre hastighet
+- Verifierad riktig modell (Rune Obelisk, 2026-11-18): acceleration 2500, yttervägg 100, innerväggar/solid infill 150 mm/s, topp 100, flödestak 12, 2 väggar. Resultat: perfekt utskrift, 22 min
+- Yttervägg: **100 mm/s** är verifierad ren (20 mm-kub, acceleration 2500, ca 8 mm³/s). Max volumetric speed: **12 mm³/s**
+- Flödestest (Orca, 2026-11-17): tornet föll vid ca 18 mm³/s, men 20 mm-kuber på 150 mm/s (ca 12 mm³/s) fick ändå underextruderade partier mitt på sidorna. Tornet och kuben säger alltså olika och orsaken är inte utredd. Tills vidare gäller 100 mm/s och tak 12. Möjligt nästa test: 230 °C på samma kub. För mer fart: större lagerhöjd i stället för högre hastighet
 - Bäddnät: bygg det **förvärmt** (`M104 S120`, `M140 S60`, `M109 S120`, `M190 S60`, `G28`, `G29`) och kontrollera att värdena ligger nära 0 innan `M500`. Två G29-körningar efter kall start gav +4,5 mm i hela nätet (orsak okänd). `G30` kräver `G28` före varje körning, annars "Z Probe Past Bed"
 
 ## Uppdatera Marlin
