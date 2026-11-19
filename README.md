@@ -108,9 +108,14 @@ Uppdatera när något kalibreras. Värdena ska även finnas i `config/`.
 - Z-hop 0 (direktdrift). Kontrollera att objekt inte har egna inställningar som överstyr profilen (Objects-fliken)
 - Avaktivera "Slow printing down for better layer cooling" vid tester på små modeller, annars går väggarna på 10–20 mm/s
 - Verifierad riktig modell (Rune Obelisk, 2026-11-18): acceleration 2500, yttervägg 100, innerväggar/solid infill 150 mm/s, topp 100, flödestak 12, 2 väggar. Resultat: perfekt utskrift, 22 min
+- Stringing (PLA, 2026-11-19): temperaturtorn 230 till 190 °C gav renast resultat vid 210 °C och lägre, så **munstycke 210 °C** (första lagret och övriga). Retraktionstorn vid 210 °C: trådarna slutade vid ca 10 mm höjd (ca 0,9–1,0 mm retraktion), så **Retraction length 1,1 mm** med retraktionshastighet 45 mm/s, deretraktion 35 mm/s, Wipe av. Riktig modell: bara lite ludd kvar. Möjligt nästa steg: Wipe while retracting (2 mm)
 - Yttervägg: **100 mm/s** är verifierad ren (20 mm-kub, acceleration 2500, ca 8 mm³/s). Max volumetric speed: **12 mm³/s**
 - Flödestest (Orca, 2026-11-17): tornet föll vid ca 18 mm³/s, men 20 mm-kuber på 150 mm/s (ca 12 mm³/s) fick ändå underextruderade partier mitt på sidorna. Tornet och kuben säger alltså olika och orsaken är inte utredd. Tills vidare gäller 100 mm/s och tak 12. Möjligt nästa test: 230 °C på samma kub. För mer fart: större lagerhöjd i stället för högre hastighet
 - Bäddnät: bygg det **förvärmt** (`M104 S120`, `M140 S60`, `M109 S120`, `M190 S60`, `G28`, `G29`) och kontrollera att värdena ligger nära 0 innan `M500`. Två G29-körningar efter kall start gav +4,5 mm i hela nätet (orsak okänd). `G30` kräver `G28` före varje körning, annars "Z Probe Past Bed"
+
+## Z-motorn vid inaktivitet
+
+`DISABLE_IDLE_Z` är avstängd i `config/Configuration_adv.h`. Annars släpper Z-motorn efter `DEFAULT_STEPPER_TIMEOUT_SEC` (120 s) och portalarmen sjunker ned på plattan, så att nästa utskrift får fel när BLTouch inte kan fällas ut. Orcas slut-G-kod stänger bara av X/Y/E (`M84 X Y E`). Utan flash kan `M84 S0` i slut-G-koden stänga av tidsgränsen tillfälligt (gäller till omstart).
 
 ## Uppdatera Marlin
 
